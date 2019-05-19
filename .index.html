@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giftastic</title>
+</head>
+
+<body></body>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">TV Shows Giffy-Tastic</h1>
+    </div>
+</div>
+
+<button data-show="Last Week Tonight">And, now this.</button>
+<button data-show="SNL">I was told there would be no math.</button>
+<button data-show="MASH">The Swamp</button>
+<div id="gifs-appear-here">
+</div>
+
+<form id="show-form">
+    <label for="show-input">Add a Show, Yo!</label>
+    <input type="text" id="show-input">
+    <br>
+
+    <!-- Button triggers new movie to be added -->
+    <input id="add-show" type="submit" value="Submit">
+</form>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $("button").on("click", function () {
+        console.log("click");
+        var tvShow = $(this).data("show").replace(/ /g,'+');
+
+        // Constructing a URL to search Giphy for the name of the person who said the quote
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+            tvShow + "&api_key=7VahokKDmLoJKP9K6hpHnxMAd1mY4RAd&limit=10";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+            .then(function(response) {
+
+                var gifDiv = $('#gifs-appear-here');
+                var results = response.data;
+                var tvShow;
+
+
+                for (var i = 0; i < results.length; i++) {
+
+                    var tvShow = $("<img>");
+
+                    tvShow.attr("src", results[i].images.fixed_height.url);
+               
+                    gifDiv.append(tvShow);
+
+                    $("#gifs-appear-here").append(gifDiv);
+
+                }
+
+
+
+            });
+
+    });
+</script>
+</body>
+
+</html>
