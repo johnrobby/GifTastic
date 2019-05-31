@@ -36,7 +36,7 @@
 
     $("button").on("click", function () {
         console.log("click");
-        var tvShow = $(this).data("show").replace(/ /g,'+');
+        var tvShow = $(this).data("show").replace(/ /g, '+');
 
         // Constructing a URL to search Giphy for the name of the person who said the quote
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -46,7 +46,7 @@
             url: queryURL,
             method: "GET"
         })
-            .then(function(response) {
+            .then(function (response) {
 
                 var gifDiv = $('#gifs-appear-here');
                 var results = response.data;
@@ -58,7 +58,7 @@
                     var tvShow = $("<img>");
 
                     tvShow.attr("src", results[i].images.fixed_height.url);
-               
+
                     gifDiv.append(tvShow);
 
                     $("#gifs-appear-here").append(gifDiv);
